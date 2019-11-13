@@ -23,18 +23,23 @@ const Statistics = (props) => {
     }
   }
 
-  return (
-    <div>
-      <h3>statistics</h3>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {average()}</p>
-      <p>positive {positivePercent()}</p>
-    </div>
-  )
-
+  if (total > 0) {
+    return (
+      <div>
+        <h3>statistics</h3>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <p>all {total}</p>
+        <p>average {average()}</p>
+        <p>positive {positivePercent()}</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>No feedback given</div>
+    )
+  }
 }
 
 const App = (props) => {
