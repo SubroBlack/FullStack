@@ -25,6 +25,22 @@ const App = (props) => {
     console.log('Bad Clicked');
   }
 
+  const total = good + neutral + bad
+
+  const average = () => {
+    if (total === 0) {
+      return 0
+    } else {
+      return (good * 1 + bad * -1) / total
+    }
+  }
+  const positivePercent = () => {
+    if (total === 0) {
+      return 0
+    } else {
+      return (good / total) * 100
+    }
+  }
   return (
     <div>
       <h1>give feedback</h1>
@@ -37,6 +53,9 @@ const App = (props) => {
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
+      <p>all {total}</p>
+      <p>average {average()}</p>
+      <p>positive {positivePercent()}</p>
 
     </div>
   )
