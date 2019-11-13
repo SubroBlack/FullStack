@@ -1,38 +1,30 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const Statistic = (props) => {
+  return (
+    <p>{props.text} {props.value}</p>
+  )
+}
+
 const Statistics = (props) => {
   const good = props.clicks.good
   const neutral = props.clicks.neutral
   const bad = props.clicks.bad
-
   const total = good + neutral + bad
-
-  const average = () => {
-    if (total === 0) {
-      return 0
-    } else {
-      return (good * 1 + bad * -1) / total
-    }
-  }
-  const positivePercent = () => {
-    if (total === 0) {
-      return 0
-    } else {
-      return (good / total) * 100
-    }
-  }
+  const average = (good * 1 + bad * -1) / total
+  const positivePercent = (good / total) * 100
 
   if (total > 0) {
     return (
       <div>
         <h3>statistics</h3>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {total}</p>
-        <p>average {average()}</p>
-        <p>positive {positivePercent()}</p>
+        <Statistic text="good" value={good} />
+        <Statistic text="neutral" value={neutral} />
+        <Statistic text="bad" value={bad} />
+        <Statistic text="all" value={total} />
+        <Statistic text="average" value={average} />
+        <Statistic text="positive" value={positivePercent} />
       </div>
     )
   } else {
@@ -40,6 +32,12 @@ const Statistics = (props) => {
       <div>No feedback given</div>
     )
   }
+}
+
+const Button = (props) => {
+  return (
+    <button onClick={props.handleClick}>{props.text}</button>
+  )
 }
 
 const App = (props) => {
@@ -76,9 +74,9 @@ const App = (props) => {
     <div>
       <h1>give feedback</h1>
       <p>
-        <button onClick={clickGood}>good</button>
-        <button onClick={clickNeutral}>neutral</button>
-        <button onClick={clickBad}>bad</button>
+        <Button handleClick={clickGood} text='good' />
+        <Button handleClick={clickNeutral} text='neutral' />
+        <Button handleClick={clickBad} text='bad' />
       </p>
       <Statistics clicks={clicks} />
     </div>
