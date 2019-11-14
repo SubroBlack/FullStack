@@ -26,10 +26,11 @@ const App = (props) => {
   console.log('The votes array', votes)
 
   const Vote = () => {
-    const copy = votes
+    const copy = [...votes]
     copy[selected] = copy[selected] + 1
     setVotes(copy)
     console.log('New Votes in', votes)
+    console.log('Most Votes is', mostVote())
   }
 
   const selectQuote = () => {
@@ -37,12 +38,30 @@ const App = (props) => {
     setSelected(num)
   }
 
+  const mostVote = () => {
+    let max = 0
+    votes.forEach(vote => {
+      if (vote > max) {
+        max = vote
+      }
+    })
+    console.log('Max Vote yet', max)
+    return max
+  }
+
   return (
     <div>
+      <h1>Anecdote of the Day</h1>
       {props.anecdotes[selected]}
+      <br />
+      has {votes[selected]} votes
       <br />
       <Button handleClick={selectQuote} text='Next Anecdote' />
       <Button handleClick={Vote} text='Vote' />
+      <h1>Anecdote with most votes</h1>
+      {props.anecdotes[votes.indexOf(mostVote())]}
+      <br />
+      has {mostVote()} votes
     </div>
   )
 
