@@ -19,6 +19,19 @@ const Button = (props) => {
 const App = (props) => {
   const [selected, setSelected] = useState(0)
 
+  const emptyVotes = [0, 0, 0, 0, 0, 0]
+  const [votes, setVotes] = useState(emptyVotes)
+
+  console.log('The quote number', selected)
+  console.log('The votes array', votes)
+
+  const Vote = () => {
+    const copy = votes
+    copy[selected] = copy[selected] + 1
+    setVotes(copy)
+    console.log('New Votes in', votes)
+  }
+
   const selectQuote = () => {
     const num = Math.floor(Math.random() * 6)
     setSelected(num)
@@ -29,6 +42,7 @@ const App = (props) => {
       {props.anecdotes[selected]}
       <br />
       <Button handleClick={selectQuote} text='Next Anecdote' />
+      <Button handleClick={Vote} text='Vote' />
     </div>
   )
 
