@@ -1,19 +1,6 @@
 import React, { useState } from "react";
-
-const Search = props => {};
-
-const Contact = props => {
-  return (
-    <p>
-      {props.name} {props.number}
-    </p>
-  );
-};
-
-const Display = props =>
-  props.persons.map(person => (
-    <Contact key={person.id} name={person.name} number={person.number} />
-  ));
+import Display from "./components/Display";
+import Search from "./components/Search";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -24,12 +11,12 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
 
+  // Save new contact in phonebook
   const saveContact = event => {
     event.preventDefault();
 
+    // Prevent repreating saves
     const names = persons.map(person => person.name);
     if (names.includes(newName)) {
       window.alert(`${newName} is already added to phonebook`);
@@ -42,45 +29,23 @@ const App = () => {
       setPersons(persons.concat(newContact));
       setNewName("");
       setNewNumber("");
-      console.log("Submitted");
     }
   };
 
+  // Change name in input field
   const changeName = event => {
     setNewName(event.target.value);
   };
 
+  // Change number in input field
   const changeNumber = event => {
     setNewNumber(event.target.value);
-  };
-
-  const changeSearch = event => {
-    setSearchTerm(event.target.value);
-  };
-
-  const search = event => {
-    const result = persons.filter(
-      person => searchTerm.toLowerCase() === person.name.toLowerCase()
-    );
-    if (result.length > 0) {
-      console.log(result);
-      setSearchResult(result);
-    } else {
-      setSearchResult([]);
-    }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with:{" "}
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={changeSearch}
-        onKeyUp={search}
-      />
-      <Display persons={searchResult} />
+      <Search persons={persons} />
       <h2>add a new</h2>
       <form onSubmit={saveContact}>
         <div>
