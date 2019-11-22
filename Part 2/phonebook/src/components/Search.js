@@ -1,29 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Display from "./Display";
 
 // Search Functionality and DIspaly Result
 const Search = props => {
-  const persons = props.persons;
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  const searchTerm = props.searchTerm;
+  const searchResult = props.searchResult;
 
-  // Search Term
-  const changeSearch = event => {
-    setSearchTerm(event.target.value);
-  };
-
-  // Search for the term and return the result
-  const search = event => {
-    const result = persons.filter(
-      person => searchTerm.toLowerCase() === person.name.toLowerCase()
-    );
-    if (result.length > 0) {
-      setSearchResult(result);
-    } else {
-      // Return empty array if result dont match
-      setSearchResult([]);
-    }
-  };
+  const changeSearch = props.changeSearch;
+  const search = props.search;
 
   return (
     <div>

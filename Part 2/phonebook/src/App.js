@@ -11,6 +11,8 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
 
   // Save new contact in phonebook
   const saveContact = event => {
@@ -42,10 +44,33 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  // Search Term
+  const changeSearch = event => {
+    setSearchTerm(event.target.value);
+  };
+
+  // Search for the term and return the result
+  const search = event => {
+    const result = persons.filter(
+      person => searchTerm.toLowerCase() === person.name.toLowerCase()
+    );
+    if (result.length > 0) {
+      setSearchResult(result);
+    } else {
+      // Return empty array if result dont match
+      setSearchResult([]);
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <Search persons={persons} />
+      <Search
+        searchTerm={searchTerm}
+        searchResult={searchResult}
+        changeSearch={changeSearch}
+        search={search}
+      />
       <h2>add a new</h2>
       <form onSubmit={saveContact}>
         <div>
