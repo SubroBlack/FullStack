@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Display from "./components/Display";
 import Search from "./components/Search";
 
+import axios from "axios";
+
 const App = () => {
-  const [persons, setPersons] = useState([
-    { id: 1, name: "Arto Hellas", number: "0283528348" },
-    { id: 2, name: "A", number: "2" },
-    { id: 3, name: "B", number: "3" },
-    { id: 4, name: "C", number: "4" }
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+
+  //Fetch data from server
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then(res => {
+      const persons = res.data;
+      setPersons(persons);
+    });
+  }, []);
 
   // Save new contact in phonebook
   const saveContact = event => {
