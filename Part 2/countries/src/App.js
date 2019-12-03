@@ -4,19 +4,21 @@ import "./App.css";
 import axios from "axios";
 
 const List = props =>
-  props.countries.map(country => (
-    <div>
-      <p key={country.alpha2Code}>{country.name}</p>
-    </div>
-  ));
+  props.list.map((item, index) => <div key={index}>{item.name}</div>);
 
 const Display = props => {
   const country = props.country;
 
   return (
     <div>
-      <p>{country.name}</p>
-      <p>{country.capital}</p>
+      <h2>{country.name}</h2>
+      <p>Capital {country.capital}</p>
+      <p>Population {country.population}</p>
+      <h4>Languages</h4>
+      <p>
+        <List list={country.languages} />
+      </p>
+      <img src={country.flag} alt="Flag" width="170px"></img>
     </div>
   );
 };
@@ -44,13 +46,13 @@ const App = () => {
     } else if (result.length === 1) {
       return <Display key="1" country={result[0]} />;
     } else if (result.length > 1) {
-      return <List countries={result} />;
+      return <List list={result} />;
     }
   };
 
   return (
     <div>
-      Search for a country:
+      Search for a country
       <input type="text" onChange={changeSearch} onKeyUp={search} />
       <br />
       {filterDisplay()}
