@@ -23,21 +23,33 @@ const App = () => {
     event.preventDefault();
 
     // Prevent repreating saves
-    const names = persons.map(person => person.name);
-    if (names.includes(newName)) {
-      window.alert(`${newName} is already added to phonebook`);
+    const repeatPerson = persons.filter(person => person.name === newName);
+    console.log(repeatPerson);
+    const newContact = {
+      name: newName,
+      number: newNumber
+    };
+    if (repeatPerson.length > 0) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        console.log("ReapeatPerson ID is", repeatPerson[0].id);
+        personsService.editPerson(repeatPerson[0].id, newContact).then(res => {
+          setPersons(
+            persons.filter(person => person.name !== newName).concat(res)
+          );
+        });
+      }
     } else {
-      const newContact = {
-        name: newName,
-        number: newNumber
-      };
       // Sending Data to server
       personsService.create(newContact).then(res => {
         setPersons(persons.concat(res));
       });
-      setNewName("");
-      setNewNumber("");
     }
+    setNewName("");
+    setNewNumber("");
   };
 
   // Delete an Entry from Phonebook
