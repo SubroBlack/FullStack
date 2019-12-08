@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import Display from "./components/Display";
 import Search from "./components/Search";
-
-import axios from "axios";
+import personsService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,9 +13,8 @@ const App = () => {
 
   //Fetch data from server
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then(res => {
-      const persons = res.data;
-      setPersons(persons);
+    personsService.getAll().then(res => {
+      setPersons(res);
     });
   }, []);
 
@@ -32,11 +31,20 @@ const App = () => {
         name: newName,
         number: newNumber
       };
-      axios.post("http://localhost:3001/persons", newContact).then(res => {
-        setPersons(persons.concat(res.data));
+      // Sending Data to server
+      personsService.create(newContact).then(res => {
+        setPersons(persons.concat(res));
       });
       setNewName("");
       setNewNumber("");
+    }
+  };
+
+  // Delete an Entry from Phonebook
+  const deletePerson = id => () => {
+    if (window.confirm("Delete the contact?")) {
+      personsService.deletePerson(id);
+      setPersons(persons.filter(person => person.id !== id));
     }
   };
 
@@ -89,7 +97,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Display persons={persons} />
+      <Display persons={persons} deletePerson={deletePerson} />
     </div>
   );
 };
