@@ -4,12 +4,32 @@ import Display from "./components/Display";
 import Search from "./components/Search";
 import personsService from "./services/persons";
 
+import "./App.css";
+
+const Notification = ({ notification }) => {
+  if (notification === null) {
+    return null;
+  } else {
+    return <div className="notification">{notification}</div>;
+  }
+};
+
+const Error = ({ error }) => {
+  if (error === null) {
+    return null;
+  } else {
+    return <div className="error">{error}</div>;
+  }
+};
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [notification, setNotification] = useState(null);
+  const [error, setError] = useState(null);
 
   //Fetch data from server
   useEffect(() => {
@@ -24,7 +44,6 @@ const App = () => {
 
     // Prevent repreating saves
     const repeatPerson = persons.filter(person => person.name === newName);
-    console.log(repeatPerson);
     const newContact = {
       name: newName,
       number: newNumber
@@ -35,18 +54,37 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        console.log("ReapeatPerson ID is", repeatPerson[0].id);
-        personsService.editPerson(repeatPerson[0].id, newContact).then(res => {
-          setPersons(
-            persons.filter(person => person.name !== newName).concat(res)
-          );
-        });
+        personsService
+          .editPerson(repeatPerson[0].id, newContact)
+          .then(res => {
+            setNotification(
+              `Changed the number of ${res.name} in the phonebook.`
+            );
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
+            setPersons(
+              persons.filter(person => person.name !== newName).concat(res)
+            );
+          })
+          .catch(error => {
+            setError(`Could not edit the contact: ${error}`);
+          });
       }
     } else {
       // Sending Data to server
-      personsService.create(newContact).then(res => {
-        setPersons(persons.concat(res));
-      });
+      personsService
+        .create(newContact)
+        .then(res => {
+          setNotification(`Added ${res.name} in the phonebook.`);
+          setTimeout(() => {
+            setNotification(null);
+          }, 5000);
+          setPersons(persons.concat(res));
+        })
+        .catch(error => {
+          setError(`Could not save the contact: ${error}`);
+        });
     }
     setNewName("");
     setNewNumber("");
@@ -55,7 +93,12 @@ const App = () => {
   // Delete an Entry from Phonebook
   const deletePerson = id => () => {
     if (window.confirm("Delete the contact?")) {
-      personsService.deletePerson(id);
+      personsService.deletePerson(id).catch(error => {
+        setError(`Could not delete the contact: ${error}`);
+        setTimeout(() => {
+          setError(null);
+        }, 5000);
+      });
       setPersons(persons.filter(person => person.id !== id));
     }
   };
@@ -91,6 +134,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
+      <Error error={error} />
       <Search
         searchTerm={searchTerm}
         searchResult={searchResult}
