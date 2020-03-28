@@ -98,6 +98,17 @@ const App = () => {
     return like;
   };
 
+  // Delete Blog
+  const deleteBlog = blogToDelete => {
+    const del = async () => {
+      const response = await blogService.deleteBlog(blogToDelete);
+      console.log("It should be deleted now", response);
+      const remainingBlogs = blogs.filter(blog => blog.id !== blogToDelete.id);
+      setBlogs(remainingBlogs);
+    };
+    return del;
+  };
+
   // Logout
   const handleLogout = async event => {
     try {
@@ -143,7 +154,12 @@ const App = () => {
           return b.likes - a.likes;
         })
         .map(blog => (
-          <Blog key={blog.id} blog={blog} addLike={addLike} />
+          <Blog
+            key={blog.id}
+            blog={blog}
+            addLike={addLike}
+            deleteBlog={deleteBlog}
+          />
         ))}
     </div>
   );
