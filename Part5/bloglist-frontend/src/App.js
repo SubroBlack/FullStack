@@ -65,7 +65,6 @@ const App = () => {
         username={username}
         password={password}
         handleUsernameChange={({ target }) => {
-          console.log("FROM loginFORM in APP", target.value);
           setUsername(target.value);
         }}
         handlePasswordChange={({ target }) => setPassword(target.value)}
@@ -87,6 +86,16 @@ const App = () => {
     blogFormRef.current.toggleVisibility();
     const returnedBlog = await blogService.create(newBlog);
     setBlogs(blogs.concat(returnedBlog));
+  };
+
+  // Add like in the Blog
+  const addLike = blogToLike => {
+    const like = async () => {
+      const returnedBlog = await blogService.addLike(blogToLike);
+      const initialBlogs = blogs.filter(blog => blog.id !== blogToLike.id);
+      setBlogs(initialBlogs.concat(returnedBlog));
+    };
+    return like;
   };
 
   // Logout
@@ -130,7 +139,7 @@ const App = () => {
         </div>
       )}
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} addLike={addLike} />
       ))}
     </div>
   );

@@ -7,7 +7,6 @@ const LoginForm = ({
   handleUsernameChange,
   handlePasswordChange
 }) => {
-  console.log("From LOGIN FORM", username);
   return (
     // Form to login
     <form onSubmit={handleLogin}>

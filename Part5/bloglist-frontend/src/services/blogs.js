@@ -23,4 +23,18 @@ const create = async newObject => {
   return response.data;
 };
 
-export default { getAll, create, setToken };
+const addLike = async blogToLike => {
+  const id = blogToLike.id;
+  const blogToSend = {
+    title: blogToLike.title,
+    author: blogToLike.author,
+    url: blogToLike.url,
+    likes: blogToLike.likes + 1
+  };
+  const blogUrl = baseUrl + "/" + id;
+  const response = await axios.put(blogUrl, blogToSend);
+  console.log("Put request sent from services/blogs", response.data);
+  return response.data;
+};
+
+export default { getAll, create, setToken, addLike };
