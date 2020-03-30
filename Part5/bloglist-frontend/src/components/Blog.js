@@ -11,14 +11,14 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
   const showBlog = () => {
     if (!showDetails) {
       return (
-        <div onClick={toggleShowDetails}>
+        <div onClick={toggleShowDetails} className="BlogBrief">
           <b>{blog.title}</b> - {blog.author}
         </div>
       );
     } else {
       return (
-        <div>
-          <div onClick={toggleShowDetails}>
+        <div className="BlogDetails">
+          <div onClick={toggleShowDetails} className="DetailsClick">
             <b>{blog.title}</b>
           </div>
           <p>By {blog.author}</p>
