@@ -36,6 +36,7 @@ const AddBlogForm = props => {
       <div>
         Title
         <input
+          id="title"
           type="text"
           value={title}
           name="Title"
@@ -45,6 +46,7 @@ const AddBlogForm = props => {
       <div>
         Author
         <input
+          id="author"
           type="text"
           value={author}
           name="Author"
@@ -54,6 +56,7 @@ const AddBlogForm = props => {
       <div>
         URL
         <input
+          id="url"
           type="url"
           value={url}
           name="URL"
@@ -63,6 +66,7 @@ const AddBlogForm = props => {
       <div>
         Likes
         <input
+          id="likes"
           type="number"
           min="0"
           value={likes}
