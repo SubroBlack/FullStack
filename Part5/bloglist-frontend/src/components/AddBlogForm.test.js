@@ -11,11 +11,11 @@ test("AddBlogForm calls eventHandler with proper input", () => {
     <AddBlogForm createBlog={createBlog} setNotification={setNotification} />
   );
 
-  const title = component.container.querySelector("#title");
-  const author = component.container.querySelector("#author");
-  const url = component.container.querySelector("#url");
-  const likes = component.container.querySelector("#likes");
-  const form = component.container.querySelector("form");
+  const title = component.container.querySelector("#titleIn");
+  const author = component.container.querySelector("#authorIn");
+  const url = component.container.querySelector("#urlIn");
+  const likes = component.container.querySelector("#likesIn");
+  const form = component.container.querySelector("formIn");
 
   fireEvent.change(title, {
     target: { value: "Test Blog" }

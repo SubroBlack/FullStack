@@ -33,7 +33,6 @@ const addLike = async blogToLike => {
   };
   const blogUrl = baseUrl + "/" + id;
   const response = await axios.put(blogUrl, blogToSend);
-  console.log("Put request sent from services/blogs", response.data);
   return response.data;
 };
 

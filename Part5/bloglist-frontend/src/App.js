@@ -149,18 +149,20 @@ const App = () => {
           {blogForm()}
         </div>
       )}
-      {blogs
-        .sort((a, b) => {
-          return b.likes - a.likes;
-        })
-        .map(blog => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            addLike={addLike}
-            deleteBlog={deleteBlog}
-          />
-        ))}
+      <div className="blogs">
+        {blogs
+          .sort((a, b) => {
+            return b.likes - a.likes;
+          })
+          .map(blog => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              addLike={addLike}
+              deleteBlog={deleteBlog}
+            />
+          ))}
+      </div>
     </div>
   );
 };

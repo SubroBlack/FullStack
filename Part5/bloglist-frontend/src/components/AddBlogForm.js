@@ -36,7 +36,7 @@ const AddBlogForm = props => {
       <div>
         Title
         <input
-          id="title"
+          id="titleIn"
           type="text"
           value={title}
           name="Title"
@@ -46,7 +46,7 @@ const AddBlogForm = props => {
       <div>
         Author
         <input
-          id="author"
+          id="authorIn"
           type="text"
           value={author}
           name="Author"
@@ -56,7 +56,7 @@ const AddBlogForm = props => {
       <div>
         URL
         <input
-          id="url"
+          id="urlIn"
           type="url"
           value={url}
           name="URL"
@@ -66,7 +66,7 @@ const AddBlogForm = props => {
       <div>
         Likes
         <input
-          id="likes"
+          id="likesIn"
           type="number"
           min="0"
           value={likes}
@@ -74,7 +74,9 @@ const AddBlogForm = props => {
           onChange={({ target }) => setLikes(target.value)}
         />
       </div>
-      <button type="submit">Submit</button>
+      <button id="addBlogBtn" type="submit">
+        Submit
+      </button>
     </form>
   );
 };
