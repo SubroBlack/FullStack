@@ -14,6 +14,17 @@ export const voteFor = id => {
   };
 };
 
+export const createNew = content => {
+  return {
+    type: "NEW",
+    data: {
+      content,
+      id: getId(),
+      votes: 0
+    }
+  };
+};
+
 const getId = () => (100000 * Math.random()).toFixed(0);
 
 const asObject = anecdote => {
@@ -38,6 +49,9 @@ const reducer = (state = initialState, action) => {
       anecdote.votes = anecdote.votes + 1;
       const otherAnecdotes = state.filter(obj => obj.id !== action.data.id);
       return otherAnecdotes.concat(anecdote);
+    case "NEW":
+      console.log("New Stuff", action.data);
+      return state.concat(action.data);
     default:
       return state;
   }
