@@ -1,22 +1,23 @@
-const notification = "";
-
-export const notify = (message) => {
-  return {
-    type: "NOTIFY",
-    message: message,
+// Setting Notification with message to be diplayed and duration of notification in sec.
+export const setNotification = (message, sec) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "NOTIFY",
+      message: message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: "CLEAR",
+        message: "",
+      });
+    }, sec * 1000);
   };
 };
 
-export const clearNotification = () => {
-  return {
-    type: "CLEAR",
-    message: "",
-  };
-};
-
-const notificationReducer = (state = notification, action) => {
+const notificationReducer = (state = "", action) => {
   switch (action.type) {
     case "NOTIFY":
+      console.log("Switch ", action.message);
       return action.message;
     case "CLEAR":
       return action.message;

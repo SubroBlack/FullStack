@@ -1,36 +1,40 @@
-export const voteFor = (id) => {
-  return {
-    type: "VOTE",
-    data: { id },
+import anecdoteService from "../services/anecdotes";
+
+export const voteFor = (anecdote) => {
+  return async (dispatch) => {
+    const result = await anecdoteService.voteFor(anecdote);
+    dispatch({
+      type: "VOTE",
+      data: result,
+    });
   };
 };
 
-export const createNew = (data) => {
-  return {
-    type: "NEW",
-    data,
+export const createNew = (content) => {
+  return async (dispatch) => {
+    const newAnecdote = await anecdoteService.createNew(content);
+    dispatch({
+      type: "NEW",
+      data: newAnecdote,
+    });
   };
 };
 
-export const initializeAnecdotes = (anecdotes) => {
-  return {
-    type: "INIT_ANECDOTES",
-    data: anecdotes,
+export const initializeAnecdotes = () => {
+  return async (dispatch) => {
+    const anecdotes = await anecdoteService.getAll();
+    dispatch({
+      type: "INIT_ANECDOTES",
+      data: anecdotes,
+    });
   };
 };
 
 const anecdoteReducer = (state = [], action) => {
-  //console.log("state now: ", state);
-  //console.log("action", action);
-
   switch (action.type) {
     case "VOTE":
-      console.log(action.data);
-
-      const anecdote = state.filter((obj) => obj.id === action.data.id)[0];
-      anecdote.votes = anecdote.votes + 1;
       const otherAnecdotes = state.filter((obj) => obj.id !== action.data.id);
-      return otherAnecdotes.concat(anecdote);
+      return otherAnecdotes.concat(action.data);
     case "NEW":
       console.log("New Stuff", action.data);
       return state.concat(action.data);

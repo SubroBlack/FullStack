@@ -1,4 +1,5 @@
 import axios from "axios";
+import AnecdoteList from "../components/AnecdoteList";
 const baseUrl = "http://localhost:3001/anecdotes";
 
 const getAll = async () => {
@@ -12,4 +13,11 @@ const createNew = async (content) => {
   return response.data;
 };
 
-export default { getAll, createNew };
+const voteFor = async (anecdote) => {
+  const url = baseUrl + "/" + anecdote.id;
+  const object = { content: anecdote.content, votes: anecdote.votes + 1 };
+  const response = await axios.put(url, object);
+  return response.data;
+};
+
+export default { getAll, createNew, voteFor };
