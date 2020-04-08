@@ -1,15 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+
 import { search } from "../reducers/filterReducer";
 
-const Filter = (props) => {
+const Filter = () => {
   const style = {
     margin: 10,
   };
 
+  const dispatch = useDispatch();
+
   const handleChange = (event) => {
     event.preventDefault();
-    props.search(event.target.value);
+    /*if (event.target.value.length > 0) {
+      dispatch(search(event.target.value));
+    } */
+    dispatch(search(event.target.value));
   };
   return (
     <div style={style}>
@@ -18,4 +24,4 @@ const Filter = (props) => {
   );
 };
 
-export default connect(null, { search })(Filter);
+export default Filter;

@@ -2,7 +2,7 @@
   "anecdotes": [
     {
       "content": "If it hurts, do it more often",
-      "votes": 5,
+      "votes": 6,
       "id": "47145"
     },
     {
@@ -47,23 +47,33 @@
     },
     {
       "content": "True Love",
-      "votes": 1,
+      "votes": 4,
       "id": "TnLCb1k"
     },
     {
       "content": "Picture",
-      "votes": 9,
+      "votes": 10,
       "id": "ZLQ3b_X"
     },
     {
       "content": "Company",
-      "votes": 2,
+      "votes": 3,
       "id": "8Ee_wCq"
     },
     {
       "content": "Kid Rock - Picture ft. Shreyl Crow",
-      "votes": 12,
+      "votes": 18,
       "id": "oWCJO5d"
+    },
+    {
+      "content": "Nobodys Home",
+      "votes": 5,
+      "id": "A-c_Q5C"
+    },
+    {
+      "content": "One And Only",
+      "votes": 0,
+      "id": "SOU7w9N"
     }
   ]
 }
