@@ -2,12 +2,12 @@
   "anecdotes": [
     {
       "content": "If it hurts, do it more often",
-      "votes": 6,
+      "votes": 12,
       "id": "47145"
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
-      "votes": 1,
+      "votes": 8,
       "id": "21149"
     },
     {
@@ -22,17 +22,17 @@
     },
     {
       "content": "Premature optimization is the root of all evil.",
-      "id": "25170",
-      "votes": 0
+      "votes": 1,
+      "id": "25170"
     },
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
-      "id": "98312",
-      "votes": 0
+      "votes": 1,
+      "id": "98312"
     },
     {
       "content": "Rockstar",
-      "votes": 0,
+      "votes": 1,
       "id": "0RRo2Kc"
     },
     {
@@ -42,38 +42,43 @@
     },
     {
       "content": "Its the Climb",
-      "votes": 1,
+      "votes": 2,
       "id": "3wPrOpm"
     },
     {
       "content": "True Love",
-      "votes": 4,
+      "votes": 14,
       "id": "TnLCb1k"
     },
     {
       "content": "Picture",
-      "votes": 10,
+      "votes": 12,
       "id": "ZLQ3b_X"
     },
     {
       "content": "Company",
-      "votes": 3,
+      "votes": 13,
       "id": "8Ee_wCq"
     },
     {
       "content": "Kid Rock - Picture ft. Shreyl Crow",
-      "votes": 18,
+      "votes": 24,
       "id": "oWCJO5d"
     },
     {
       "content": "Nobodys Home",
-      "votes": 5,
+      "votes": 16,
       "id": "A-c_Q5C"
     },
     {
       "content": "One And Only",
-      "votes": 0,
+      "votes": 2,
       "id": "SOU7w9N"
+    },
+    {
+      "content": "21 Guns",
+      "votes": 0,
+      "id": "CT6fqmT"
     }
   ]
 }
