@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Switch, Route, useParams, useHistory } from "react-router-dom";
+import { useField } from "./hooks/index";
 
 const Menu = () => {
   const padding = {
@@ -70,26 +71,35 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
-  // History from react-router-dom to redirect after form has been submitted
+  const content = useField("text");
+  const author = useField("text");
+  const info = useField("text");
+
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.props.value,
+      author: author.props.value,
+      info: info.props.value,
       votes: 0,
     });
     history.push("/");
-    props.setNotification(`A new anecdote ${content} created!`);
+    props.setNotification(`A new anecdote ${content.props.value} created!`);
     setTimeout(() => {
       props.setNotification(``);
     }, 10000);
   };
+
+  const clearAll = (e) => {
+    e.preventDefault();
+    content.reset();
+    author.reset();
+    info.reset();
+  };
+
+  console.log(content.props);
 
   return (
     <div>
@@ -97,29 +107,18 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <input {...content.props} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input {...author.props} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input {...info.props} />
         </div>
-        <button>create</button>
+        <button>Create</button>
+        <button onClick={clearAll}>Reset</button>
       </form>
     </div>
   );
