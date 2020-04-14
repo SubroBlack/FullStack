@@ -1,0 +1,33 @@
+{
+  "notes": [
+    {
+      "content": "custom-hookit aivan mahtavia",
+      "id": 1
+    },
+    {
+      "content": "paras feature ikinä <3",
+      "id": 2
+    },
+    {
+      "content": "Sometimes I hate every single stupid words you say",
+      "id": 3
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "Harry Potter",
+      "number": "000",
+      "id": 2
+    },
+    {
+      "name": "P!nk",
+      "number": "01",
+      "id": 3
+    }
+  ]
+}
