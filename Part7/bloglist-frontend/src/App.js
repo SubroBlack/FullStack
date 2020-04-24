@@ -2,14 +2,17 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, Link } from "react-router-dom";
 import BlogList from "./components/BlogList";
+import UserList from "./components/UserList";
 import Blog from "./components/Blog";
+import User from "./components/User";
 import LoginForm from "./components/LoginForm";
 import AddBlogForm from "./components/AddBlogForm";
 import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
 
 import { initializeBlogs } from "./reducers/blogReducer";
-import { setLoggedUser, clearLoggedUser } from "./reducers/loginReducer";
+import { getUsers } from "./reducers/userReducer";
+import { setLoggedUser } from "./reducers/loginReducer";
 import Logout from "./components/LogoutForm";
 
 const App = () => {
@@ -19,6 +22,7 @@ const App = () => {
   // Fetching the Blog List
   useEffect(() => {
     dispatch(initializeBlogs());
+    dispatch(getUsers());
   }, [dispatch]);
 
   // Checking if the User is logged in
@@ -36,6 +40,9 @@ const App = () => {
       <h4>
         <Notification />
       </h4>
+      <p>
+        <Link to={"/users"}>Users</Link>
+      </p>
       {loggedUser === null ? (
         <div>
           <Link to={"/login"}>Login</Link>
@@ -55,8 +62,14 @@ const App = () => {
         <Route path="/blog/:id">
           <Blog />
         </Route>
+        <Route path="/users/:id">
+          <User />
+        </Route>
         <Route path="/login">
           <LoginForm />
+        </Route>
+        <Route path="/users">
+          <UserList />
         </Route>
         <Route path="/">
           <div className="blogs">
