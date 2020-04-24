@@ -10,8 +10,6 @@ const UserList = () => {
   if (!users) {
     return null;
   }
-
-  console.log("USERs from List: ", users);
   return (
     <div>
       <table>

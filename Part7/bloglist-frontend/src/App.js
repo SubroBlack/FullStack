@@ -9,11 +9,19 @@ import LoginForm from "./components/LoginForm";
 import AddBlogForm from "./components/AddBlogForm";
 import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
+import Logout from "./components/LogoutForm";
 
 import { initializeBlogs } from "./reducers/blogReducer";
 import { getUsers } from "./reducers/userReducer";
 import { setLoggedUser } from "./reducers/loginReducer";
-import Logout from "./components/LogoutForm";
+
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button,
+} from "@material-ui/core";
 
 const App = () => {
   // useDispatch hook from react-redux library
@@ -35,29 +43,40 @@ const App = () => {
   console.log(loggedUser);
 
   return (
-    <div>
-      <h2>blogs</h2>
+    <Container>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+          ></IconButton>
+          <Button color="inherit" component={Link} to="/">
+            <h2>Blogs</h2>
+          </Button>
+          <Button color="inherit" component={Link} to="/users">
+            Users
+          </Button>
+          {loggedUser === null ? (
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+          ) : (
+            <>
+              <Button color="inherit">
+                <Logout />
+              </Button>
+              <Button color="inherit" component={Link} to="/addBlog">
+                Add Blog
+              </Button>
+              <Button color="default">{loggedUser.name} is logged in</Button>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
       <h4>
         <Notification />
       </h4>
-      <p>
-        <Link to={"/users"}>Users</Link>
-      </p>
-      {loggedUser === null ? (
-        <div>
-          <Link to={"/login"}>Login</Link>
-        </div>
-      ) : (
-        <div>
-          <p>
-            {loggedUser.name} is logged in
-            <Logout />
-          </p>
-          <Togglable buttonLabel="Add Blog Form" ref={React.createRef()}>
-            <AddBlogForm />
-          </Togglable>
-        </div>
-      )}
       <Switch>
         <Route path="/blog/:id">
           <Blog />
@@ -68,6 +87,9 @@ const App = () => {
         <Route path="/login">
           <LoginForm />
         </Route>
+        <Route path="/addBlog">
+          <AddBlogForm />
+        </Route>
         <Route path="/users">
           <UserList />
         </Route>
@@ -77,7 +99,7 @@ const App = () => {
           </div>
         </Route>
       </Switch>
-    </div>
+    </Container>
   );
 };
 

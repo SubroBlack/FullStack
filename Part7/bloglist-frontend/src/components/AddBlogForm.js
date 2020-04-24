@@ -35,6 +35,15 @@ const AddBlogForm = () => {
     history.push("/");
   };
 
+  // Cancel the Post
+  const cancel = () => {
+    setTitle("");
+    setAuthor("");
+    setURL("");
+    setLikes(0);
+    history.push("/");
+  };
+
   return (
     <form onSubmit={addBlog}>
       <div>
@@ -81,6 +90,7 @@ const AddBlogForm = () => {
       <button id="addBlogBtn" type="submit">
         Submit
       </button>
+      <button onClick={cancel}>Cancel</button>
     </form>
   );
 };
