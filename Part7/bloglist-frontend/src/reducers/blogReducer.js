@@ -38,6 +38,18 @@ export const like = (content) => {
   };
 };
 
+// To Comment on a Blog
+export const commentOn = (blog, content) => {
+  return async (dispatch) => {
+    const result = await blogService.comment(blog.id, content);
+    dispatch({
+      type: "COMMENT",
+      data: result,
+    });
+    dispatch(notify(`You commented ${content} on the blog ${blog.title}`, 5));
+  };
+};
+
 // To Delete a Blog
 export const deleteBlog = (content) => {
   return async (dispatch) => {
@@ -64,6 +76,9 @@ const blogReducer = (state = [], action) => {
     case "LIKE":
       const otherBlogs = state.filter((obj) => obj.id !== action.data.id);
       return otherBlogs.concat(action.data);
+    case "COMMENT":
+      const other = state.filter((obj) => obj.id !== action.data.id);
+      return other.concat(action.data);
     case "DELETE":
       return state.filter((obj) => obj.id !== action.data.id);
     default:

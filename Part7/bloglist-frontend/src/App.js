@@ -8,7 +8,6 @@ import User from "./components/User";
 import LoginForm from "./components/LoginForm";
 import AddBlogForm from "./components/AddBlogForm";
 import Notification from "./components/Notification";
-import Togglable from "./components/Togglable";
 import Logout from "./components/LogoutForm";
 
 import { initializeBlogs } from "./reducers/blogReducer";

@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 const User = () => {
   const users = useSelector((state) => state.users);
   const userById = (id) => users.find((a) => a.id === id);
-  const blogId = useParams().id;
+  const userId = useParams().id;
 
   if (!users) {
     return null;
   }
 
-  const user = userById(blogId);
+  const user = userById(userId);
   console.log("From User: ", user.blogs);
   return (
     <div className="UserDetails">

@@ -29,6 +29,7 @@ const create = async (newObject) => {
   return response.data;
 };
 
+// Adding Like on a blog
 const addLike = async (blogToLike) => {
   const id = blogToLike.id;
   const blogToSend = {
@@ -39,6 +40,17 @@ const addLike = async (blogToLike) => {
   };
   const blogUrl = baseUrl + "/" + id;
   const response = await axios.put(blogUrl, blogToSend);
+  return response.data;
+};
+
+// Posting a comment on a blog entry
+const comment = async (id, content) => {
+  const url = `${baseUrl}/${id}/comment`;
+  const commentToPost = {
+    content: content,
+  };
+  const response = await axios.post(url, commentToPost);
+  console.log(response.data);
   return response.data;
 };
 
@@ -63,4 +75,4 @@ const deleteBlog = async (blog) => {
   }
 };
 
-export default { getAll, create, setToken, addLike, deleteBlog };
+export default { getAll, create, setToken, addLike, comment, deleteBlog };
