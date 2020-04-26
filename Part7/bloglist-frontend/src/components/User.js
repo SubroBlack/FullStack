@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import { Card, CardHeader, CardContent, Button } from "@material-ui/core";
+
 const User = () => {
   const users = useSelector((state) => state.users);
   const userById = (id) => users.find((a) => a.id === id);
@@ -15,17 +17,19 @@ const User = () => {
   const user = userById(userId);
   console.log("From User: ", user.blogs);
   return (
-    <div className="UserDetails">
-      <h3>{user.name}</h3>
-      <b>Added Blogs</b>
-      <ul>
-        {user.blogs.map((blog) => (
-          <li key={blog.id}>
-            <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Card>
+      <CardContent>
+        <h3>{user.name}</h3>
+        <b>Added Blogs</b>
+        <ul>
+          {user.blogs.map((blog) => (
+            <li key={blog.id}>
+              <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
   );
 };
 

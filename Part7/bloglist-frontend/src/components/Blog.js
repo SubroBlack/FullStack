@@ -2,7 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { like, deleteBlog } from "../reducers/blogReducer";
+
+import Togglable from "./Togglable";
 import CommentForm from "./commentForm";
+
+import { Card, CardHeader, CardContent, Button } from "@material-ui/core";
 
 const Blog = () => {
   const blogs = useSelector((state) => state.blogs);
@@ -41,28 +45,34 @@ const Blog = () => {
   };
 
   return (
-    <div className="BlogDetails">
-      <div className="DetailsClick">
-        <b>{blog.title}</b>
-      </div>
-      <p>By {blog.author}</p>
-      <p>Found at: {blog.url}</p>
-      <p>
-        with {blog.likes} likes <button onClick={addLike}>Add Like</button>{" "}
-      </p>
-      <p>
-        <button onClick={del}>Delete</button>
-      </p>
-      <div>
-        <h4>Comments</h4>
+    <Card raised={true}>
+      <CardHeader title={blog.title} />
+      <CardContent>
+        <p>By {blog.author}</p>
+        <p>Found at: {blog.url}</p>
+        <p>
+          with {blog.likes} likes <Button onClick={addLike}>Add Like</Button>
+        </p>
+        <p>
+          <Button color="secondary" onClick={del}>
+            Delete
+          </Button>
+        </p>
+      </CardContent>
+
+      <CardContent>
+        <br />
+        <Togglable buttonLabel="Comments">
+          <ul>
+            {blog.comments.map((a) => (
+              <li key={a.id}>{a.content}</li>
+            ))}
+          </ul>
+        </Togglable>
+        <br />
         <CommentForm blog={blog} />
-        <ul>
-          {blog.comments.map((a) => (
-            <li key={a.id}>{a.content}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

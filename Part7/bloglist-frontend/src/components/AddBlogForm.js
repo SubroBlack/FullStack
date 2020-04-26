@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { createNew } from "../reducers/blogReducer";
 import { useHistory } from "react-router-dom";
 
+import { Card, TextField, Button, CardContent } from "@material-ui/core";
+
 const AddBlogForm = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -45,53 +47,62 @@ const AddBlogForm = () => {
   };
 
   return (
-    <form onSubmit={addBlog}>
-      <div>
-        Title
-        <input
-          id="titleIn"
-          type="text"
-          value={title}
-          name="Title"
-          onChange={({ target }) => setTitle(target.value)}
-        />
-      </div>
-      <div>
-        Author
-        <input
-          id="authorIn"
-          type="text"
-          value={author}
-          name="Author"
-          onChange={({ target }) => setAuthor(target.value)}
-        />
-      </div>
-      <div>
-        URL
-        <input
-          id="urlIn"
-          type="url"
-          value={url}
-          name="URL"
-          onChange={({ target }) => setURL(target.value)}
-        />
-      </div>
-      <div>
-        Likes
-        <input
-          id="likesIn"
-          type="number"
-          min="0"
-          value={likes}
-          name="Likes"
-          onChange={({ target }) => setLikes(target.value)}
-        />
-      </div>
-      <button id="addBlogBtn" type="submit">
-        Submit
-      </button>
-      <button onClick={cancel}>Cancel</button>
-    </form>
+    <Card>
+      <CardContent>
+        <form onSubmit={addBlog}>
+          <div>
+            <TextField
+              id="titleIn"
+              type="text"
+              value={title}
+              name="Title"
+              label="Title"
+              onChange={({ target }) => setTitle(target.value)}
+            />
+          </div>
+          <br />
+          <div>
+            <TextField
+              id="authorIn"
+              type="text"
+              value={author}
+              label="Author"
+              name="Author"
+              onChange={({ target }) => setAuthor(target.value)}
+            />
+          </div>
+          <br />
+          <div>
+            <TextField
+              id="urlIn"
+              type="url"
+              label="URL"
+              value={url}
+              name="URL"
+              onChange={({ target }) => setURL(target.value)}
+            />
+          </div>
+          <br />
+          <div>
+            <TextField
+              id="likesIn"
+              type="number"
+              min="0"
+              value={likes}
+              name="Likes"
+              onChange={({ target }) => setLikes(target.value)}
+            />
+          </div>
+          <br />
+          <Button color="primary" id="addBlogBtn" type="submit">
+            Submit
+          </Button>
+          <Button color="secondary" onClick={cancel}>
+            Cancel
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

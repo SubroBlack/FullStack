@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { commentOn } from "../reducers/blogReducer";
-import { useHistory } from "react-router-dom";
+
+import { Button, TextField } from "@material-ui/core";
 
 const CommentForm = ({ blog }) => {
   const [comment, setComment] = useState("");
 
   // Dispatch action creator
   const dispatch = useDispatch();
-
-  const history = useHistory();
 
   //Comment on the blog
   const postComment = async (event) => {
@@ -20,13 +19,13 @@ const CommentForm = ({ blog }) => {
 
   return (
     <form onSubmit={postComment}>
-      <input
+      <TextField
         type="text"
         value={comment}
         name="Comment"
         onChange={({ target }) => setComment(target.value)}
       />
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };

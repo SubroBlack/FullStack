@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { signIn } from "../reducers/loginReducer";
 import { useHistory } from "react-router-dom";
 
+import { TextField, Button } from "@material-ui/core";
+
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,9 +38,8 @@ const LoginForm = () => {
     // Form to login
     <form onSubmit={handleLogin}>
       <div>
-        username
-        <input
-          id="username"
+        <TextField
+          label="username"
           onChange={handleUsernameChange}
           type="text"
           value={username}
@@ -46,20 +47,22 @@ const LoginForm = () => {
         />
       </div>
       <div>
-        password
-        <input
-          id="password"
+        <TextField
+          label="password"
           type="password"
           value={password}
           name="Password"
           onChange={handlePasswordChange}
         />
       </div>
-      <button id="login" type="submit">
-        Login
-      </button>
       <br />
-      <button onClick={cancel}>Cancel</button>
+      <Button color="primary" type="submit">
+        Login
+      </Button>
+      <br />
+      <Button color="secondary" onClick={cancel}>
+        Cancel
+      </Button>
     </form>
   );
 };

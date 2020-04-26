@@ -1,6 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@material-ui/core";
 
 const UserList = () => {
   const result = useSelector((state) => state.users);
@@ -11,28 +18,30 @@ const UserList = () => {
     return null;
   }
   return (
-    <div>
-      <table>
-        <tbody>
-          <tr>
-            <th>
+    <TableContainer>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>
               <h3>Users</h3>
-            </th>
-            <th>Number of Blogs</th>
-          </tr>
+            </TableCell>
+            <TableCell>
+              <h3>Number of Blogs</h3>
+            </TableCell>
+          </TableRow>
           {users.map((user) => (
-            <tr key={user.id}>
-              <td>
+            <TableRow key={user.id}>
+              <TableCell>
                 <b>
                   <Link to={`/users/${user.id}`}>{user.name}</Link>
                 </b>
-              </td>
-              <td>{user.blogs.length}</td>
-            </tr>
+              </TableCell>
+              <TableCell>{user.blogs.length}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
