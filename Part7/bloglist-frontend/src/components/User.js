@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { Card, CardHeader, CardContent, Button } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 
 const User = () => {
   const users = useSelector((state) => state.users);

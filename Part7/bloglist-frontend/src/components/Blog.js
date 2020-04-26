@@ -31,8 +31,6 @@ const Blog = () => {
     return null;
   }
 
-  console.log(blog);
-
   // Add like in the Blog
   const addLike = () => {
     dispatch(like(blog));
