@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
-const uuid = require("uuid/v1");
+const { v4: uuid } = require("uuid");
 
 let authors = [
   {
@@ -113,7 +113,7 @@ const typeDefs = gql`
       author: String!
       published: Int!
       genres: [String!]!
-    ): Book
+    ): Book!
     editAuthor(name: String!, setBornTo: Int!): Author
   }
 `;
@@ -150,6 +150,7 @@ const resolvers = {
       }
       const book = { ...args, id: uuid() };
       books = books.concat(book);
+      console.log("BOOKS: ", books);
       return book;
     },
     editAuthor: (root, args) => {
