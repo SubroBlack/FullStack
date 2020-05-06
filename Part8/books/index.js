@@ -178,7 +178,7 @@ const resolvers = {
     editAuthor: async (root, args, context) => {
       // OPeration only allowed for logged in Users
       const currentUser = context.currentUser;
-      if (currentUser) {
+      if (!currentUser) {
         throw new AuthenticationError("not authenticated");
       }
       // Find the author to change the date of birth

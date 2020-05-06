@@ -6,7 +6,7 @@ const Authors = (props) => {
   const result = useQuery(ALL_AUTHORS);
   let authors = [];
 
-  if (!result.loading) {
+  if (result.data) {
     authors = result.data.allAuthors;
   }
 
