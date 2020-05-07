@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useSubscription } from "@apollo/client";
+
+import { BOOK_ADDED, ALL_BOOKS } from "./query/queries";
 
 import Authors from "./components/Authors";
 import Books from "./components/Books";
@@ -20,6 +22,34 @@ const App = () => {
       setToken(token);
     }
   }, []);
+
+  // Updating the cache
+  const updateCacheWith = (addedBook) => {
+    if (!addedBook) {
+      return null;
+    }
+    console.log("update cache ", addedBook);
+    const includedIn = (set, object) => {
+      return set.map((p) => p.id).includes(object.id);
+    };
+    const dataInStore = client.readQuery({ query: ALL_BOOKS });
+    if (!includedIn(dataInStore.allBooks, addedBook)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks: dataInStore.allBooks.concat(addedBook) },
+      });
+    }
+  };
+
+  // Subscription to added book
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedBook = subscriptionData.data.bookAdded;
+      console.log("Added Book ", addedBook);
+      window.alert(`Books Added: ${addedBook.title}`);
+      updateCacheWith(addedBook);
+    },
+  });
 
   //Function to logout
   const logout = () => {
@@ -57,7 +87,11 @@ const App = () => {
 
       <Books show={page === "books"} token={token} />
 
-      <NewBook show={page === "add"} token={token} />
+      <NewBook
+        show={page === "add"}
+        token={token}
+        updateCacheWith={updateCacheWith}
+      />
 
       <EditAuthor show={page === "editAuthor"} token={token} />
     </div>
