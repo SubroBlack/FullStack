@@ -5,6 +5,7 @@ interface Numbers {
   weight: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const parseArguments = (h: any, w: any): Numbers => {
   if (!isNaN(Number(h)) && !isNaN(Number(w))) {
     return {
@@ -16,6 +17,7 @@ const parseArguments = (h: any, w: any): Numbers => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const calculateBmi = (h: any, w: any): Result => {
   const { height, weight } = parseArguments(h, w);
   if (!(height > 0) || !(weight > 0)) {
@@ -30,9 +32,3 @@ export const calculateBmi = (h: any, w: any): Result => {
     return "High (OverWeight)";
   }
 };
-
-try {
-  console.log(calculateBmi(process.argv[2], process.argv[3]));
-} catch (e) {
-  console.log("Oops something went wrong ", e.message);
-}

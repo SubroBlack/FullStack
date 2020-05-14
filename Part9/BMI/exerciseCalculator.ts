@@ -13,26 +13,38 @@ interface Values {
   log: Array<number>;
 }
 
-const parseInputs = (args: Array<any>): Values => {
-  const target = Number(args[2]);
-  const chart = args.slice(3).map((n) => Number(n));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const parseInputs = (body: any): Values => {
+  if (isNaN(Number(body.target))) {
+    throw new Error("Provide Numbers");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body.daily_exercises.forEach((n: any) => {
+    if (isNaN(Number(n))) {
+      throw new Error("Provide Numbers");
+    }
+    return Number(n);
+  });
+  const target = Number(body.target);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const chart = body.daily_exercises.map((n: any) => Number(n));
   return {
     target: target,
     log: chart,
   };
 };
 
-const calculateExercise = (
-  exercise: Array<number>,
-  exerciseTarget: number
-): ExerciseChart => {
-  if (exercise.length < 1) {
-    throw new Error("No data given");
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const calculateExercise = (body: any): ExerciseChart => {
+  const { target, log } = parseInputs(body);
+
+  if (log.length < 1) {
+    throw new Error("Parameters Missing");
   }
   const reducer = (acc: number, currentValue: number): number =>
     acc + currentValue;
-  const sum = exercise.reduce(reducer);
-  const average = sum / exercise.length;
+  const sum = log.reduce(reducer);
+  const average = sum / log.length;
 
   interface Rating {
     rating: number;
@@ -40,6 +52,7 @@ const calculateExercise = (
   }
 
   const rate = (average: number, target: number): Rating => {
+    console.log("Target Received", target);
     if (average < (3 / 4) * target) {
       return {
         rating: 1,
@@ -57,22 +70,15 @@ const calculateExercise = (
       };
     }
   };
-  const rateResult = rate(average, exerciseTarget);
+  const rateResult = rate(average, target);
 
   return {
-    periodLength: exercise.length,
-    trainingDays: exercise.filter((d) => d !== 0).length,
-    success: average > exerciseTarget,
+    periodLength: log.length,
+    trainingDays: log.filter((d) => d !== 0).length,
+    success: average > target,
     rating: rateResult.rating,
     ratingDescription: rateResult.ratingDescription,
-    target: exerciseTarget,
+    target: target,
     average: average,
   };
 };
-
-try {
-  const { target, log } = parseInputs(process.argv);
-  console.log(calculateExercise(log, target));
-} catch (e) {
-  console.log("Error: ", e.message);
-}

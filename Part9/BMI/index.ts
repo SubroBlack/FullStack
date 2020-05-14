@@ -1,12 +1,16 @@
 import express from "express";
 import { calculateBmi } from "./bmiCalculator";
+import { calculateExercise } from "./exerciseCalculator";
 const app = express();
+app.use(express.json());
 
-app.get("/hello", (_req, res) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+app.get("/hello", (_req: any, res: any) => {
   res.send("Hello FullStack!!!");
 });
 
-app.get("/bmi", (req, res) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+app.get("/bmi", (req: any, res: any) => {
   try {
     const bmi = calculateBmi(req.query.height, req.query.weight);
     const result = {
@@ -14,6 +18,16 @@ app.get("/bmi", (req, res) => {
       height: req.query.height,
       bmi: bmi,
     };
+    res.json(result);
+  } catch (e) {
+    res.json({ error: e.message });
+  }
+});
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+app.post("/exercises", (req: any, res: any) => {
+  try {
+    const result = calculateExercise(req.body);
     res.json(result);
   } catch (e) {
     res.json({ error: e.message });
