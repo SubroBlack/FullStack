@@ -16,23 +16,23 @@ const parseArguments = (h: any, w: any): Numbers => {
   }
 };
 
-const calculateBmi = (h: number, w: number): Result => {
-  if (!(h > 0) || !(w > 0)) {
+export const calculateBmi = (h: any, w: any): Result => {
+  const { height, weight } = parseArguments(h, w);
+  if (!(height > 0) || !(weight > 0)) {
     throw new Error("Enter Valid Height and Weight");
   }
-  const bmi = w / ((h / 100) * (h / 100));
+  const bmi = weight / ((height / 100) * (height / 100));
   if (bmi < 18.6) {
-    return "Low (Light Weight)";
+    return "Low (UnderWeight)";
   } else if (bmi < 25) {
     return "Normal (Healthy Weight)";
   } else {
-    return "High (Heavy Weight)";
+    return "High (OverWeight)";
   }
 };
 
 try {
-  const body = parseArguments(process.argv[2], process.argv[3]);
-  console.log(calculateBmi(body.height, body.weight));
+  console.log(calculateBmi(process.argv[2], process.argv[3]));
 } catch (e) {
   console.log("Oops something went wrong ", e.message);
 }
