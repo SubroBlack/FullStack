@@ -1,11 +1,12 @@
 import patientData from "../../data/patients";
-import { Patients, PatientsCensored } from "../types";
+import { v4 as uuid } from "uuid";
+import { Patient, PatientCensored, NewPatient } from "../types";
 
-const getPatients = (): Patients[] => {
+const getPatients = (): Patient[] => {
   return patientData;
 };
 
-const getPatientsCensored = (): PatientsCensored[] => {
+const getPatientsCensored = (): PatientCensored[] => {
   return patientData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
     name,
@@ -15,7 +16,18 @@ const getPatientsCensored = (): PatientsCensored[] => {
   }));
 };
 
+const addPatient = (entry: NewPatient): Patient => {
+  const newPatient = {
+    id: uuid(),
+    ...entry,
+  };
+  patientData.push(newPatient);
+  console.log("new Patient: ", newPatient);
+  return newPatient;
+};
+
 export default {
   getPatients,
   getPatientsCensored,
+  addPatient,
 };
