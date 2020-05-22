@@ -26,8 +26,18 @@ const addPatient = (entry: NewPatient): Patient => {
   return newPatient;
 };
 
+const getPatient = (id: string): Patient => {
+  try {
+    const reqPatients = patientData.filter((p) => p.id === id);
+    return reqPatients[0];
+  } catch (error) {
+    throw new Error(`Cannot Find the Patient`);
+  }
+};
+
 export default {
   getPatients,
   getPatientsCensored,
   addPatient,
+  getPatient,
 };
