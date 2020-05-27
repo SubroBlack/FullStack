@@ -1,6 +1,6 @@
 import patientData from "../../data/patients";
 import { v4 as uuid } from "uuid";
-import { Patient, PatientCensored, NewPatient } from "../types";
+import { Patient, PatientCensored, NewPatient, Entry } from "../types";
 
 const getPatients = (): Patient[] => {
   return patientData;
@@ -35,9 +35,23 @@ const getPatient = (id: string): Patient => {
   }
 };
 
+const addEntry = (entry: Entry, id: string): Patient => {
+  try {
+    const patient = patientData.filter((p) => p.id === id)[0];
+    console.log("PatientService, addEntry: Entry: ", entry);
+    patient.entries = patient.entries.concat(entry);
+    console.log("PatientService, AddEntry: ", patient);
+    patientData.filter((p) => p.id !== id).concat(patient);
+    return patient;
+  } catch (error) {
+    throw new Error(`Cannot add entry on the Patient`);
+  }
+};
+
 export default {
   getPatients,
   getPatientsCensored,
   addPatient,
   getPatient,
+  addEntry,
 };
